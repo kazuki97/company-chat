@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>チャットログイン</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <h2>ログイン</h2>
+  <form id="login-form">
+    <input type="email" id="email" placeholder="メールアドレス" required/>
+    <input type="password" id="password" placeholder="パスワード" required/>
+    <button type="submit">ログイン</button>
+  </form>
+  <p>
+    アカウントがない方は
+    <a href="signup.html">こちらから作成</a>
+  </p>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAC_A8dMvfzc2I8SaKTSfklFDWHgqFZThQ",
+      authDomain: "company-chat-app.firebaseapp.com",
+      projectId: "company-chat-app",
+      storageBucket: "company-chat-app.firebasestorage.app",
+      messagingSenderId: "409983657200",
+      appId: "1:409983657200:web:bf2f037efb6a292799ce35",
+      measurementId: "G-KDL141H28M"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    const auth = firebase.auth();
+    document.getElementById("login-form").addEventListener("submit", async e => {
+      e.preventDefault();
+      try {
+        await auth.signInWithEmailAndPassword(
+          document.getElementById("email").value,
+          document.getElementById("password").value
+        );
+        location.href = "index.html";
+      } catch (err) {
+        alert("ログイン失敗: " + err.message);
+      }
+    });
+  </script>
+</body>
+</html>

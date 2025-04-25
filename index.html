@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>社内チャット</title>
+  <link rel="stylesheet" href="styles.css?v=5" />
+</head>
+<body>
+  <div class="app">
+    <!-- ① ナビゲーション -->
+    <aside class="nav">
+      <button class="nav-icon">🏠</button>
+      <button class="nav-icon">👥</button>
+      <button class="nav-icon">⚙️</button>
+    </aside>
+
+    <!-- ② ルーム一覧 -->
+    <section class="conversations">
+      <div class="conversations-header">
+        <button id="add-room-btn" class="add-room">＋</button>
+        <input
+          type="search"
+          id="room-search"
+          placeholder="トークルームとメッセージ検索…"
+          autocomplete="off"
+        />
+      </div>
+      <ul id="conv-list"></ul>
+      <button id="logout" class="logout-btn">ログアウト</button>
+    </section>
+
+    <!-- ②⇔③ のリサイズバー -->
+    <div id="conv-resizer" class="resizer"></div>
+
+    <!-- ③ チャットウインドウ -->
+    <main class="chat-window">
+      <header class="room-bar">
+        ルーム：<span id="room-name">general</span>
+        <select id="room-select" hidden></select>
+      </header>
+      <ul id="chat"></ul>
+      <div id="input-bar">
+        <input
+          type="text"
+          id="message-input"
+          placeholder="メッセージを入力…"
+          autocomplete="off"
+        />
+        <button id="send-btn">送信</button>
+      </div>
+    </main>
+  </div>
+
+  <!-- ルーム作成モーダル -->
+  <div id="room-modal" class="overlay hidden">
+    <div class="modal">
+      <h2>ルームを作成</h2>
+      <input
+        type="text"
+        id="new-room-input"
+        placeholder="新しいルーム名"
+      />
+      <div class="modal-buttons">
+        <button id="cancel-room-btn" class="btn-cancel">キャンセル</button>
+        <button id="create-room-btn" class="btn-create">作成</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+  <script>
+    firebase.initializeApp({
+      apiKey:    "AIzaSyAC_A8dMvfzc2I8SaKTSfklFDWHgqFZThQ",
+      authDomain:"company-chat-app.firebaseapp.com",
+      projectId: "company-chat-app",
+      storageBucket:"company-chat-app.firebasestorage.app",
+      messagingSenderId:"409983657200",
+      appId:     "1:409983657200:web:bf2f037efb6a292799ce35"
+    });
+  </script>
+  <script src="main.js?v=5"></script>
+</body>
+</html>

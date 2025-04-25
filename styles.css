@@ -1,0 +1,360 @@
+:root {
+    --line-green:            #06C755;
+    --gray-bg:               #F5F7F7;
+    --sidebar-width:         64px;
+    --conv-width:            280px;
+    --font-main:             "LINE Seed Sans","Helvetica Neue",Arial,sans-serif;
+    --font-sm:               10px;
+    --color-text:            #1C1C1E;
+    --color-ts:              #8E8E93;
+    --border-light:          #E5E5EA;
+    --border-gray:           #DDDDDD;
+    --resizer-hover:         #CFD0D2;
+
+    /* ── バブル用トークン ── */
+    --bubble-padding-y:       6px;
+    --bubble-padding-x:      12px;
+    --bubble-radius:         18px;
+    --bubble-pointer-size:    6px;
+    --bubble-pointer-offset: 12px;
+    --bubble-pointer-bottom:  2px;
+    --bubble-connected-radius: 4px;  /* 連続メッセージ間の角丸 */
+
+    /* ── メッセージ間隔 ── */
+    --msg-gap-group:          4px;
+    --msg-gap-separate:      16px;
+}
+
+/* テスト用：反映されていればボディに赤い枠が出ます */
+body {
+    outline: 5px solid red !important;
+}
+
+/* ── ユーティリティ ── */
+.hidden {
+    display: none !important;
+}
+
+/* ── 全体 ── */
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    font-family: var(--font-main);
+    background: var(--gray-bg);
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* ── レイアウト ── */
+.app {
+    display: grid;
+    grid-template-columns:
+      var(--sidebar-width)
+      var(--conv-width)
+      4px
+      1fr;
+    grid-template-rows: 48px 1fr 48px;
+    height: 100%;
+}
+.nav, .conversations, #conv-resizer, .chat-window {
+    grid-row: 1 / -1;
+}
+
+/* ── nav ── */
+.nav {
+    background: #0f1419;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 0;
+}
+.nav-icon {
+    width: 40px; height: 40px;
+    margin: 6px 0;
+    border: none; background: none;
+    color: #fff; font-size: 20px;
+    cursor: pointer;
+}
+
+/* ── conversations ── */
+.conversations {
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--border-light);
+    height: 100%;
+    min-width: 0;
+}
+.conversations-header {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+}
+.add-room {
+    width: 32px;
+    height: 32px;
+    margin-right: 8px;
+    border: none;
+    background: var(--line-green);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+}
+.conversations-header input {
+    flex: 1;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* 会話リスト */
+#conv-list {
+    flex: 1;
+    margin: 0; padding: 0;
+    list-style: none;
+    overflow-y: auto;
+}
+#conv-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    cursor: pointer;
+}
+#conv-list li:hover    { background: #F0F0F0; }
+#conv-list li.active   { background: #E8F3FF; }
+
+/* アバター・テキスト */
+.conv-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: #D0D0D0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #fff;
+}
+.conv-info {
+    flex: 1;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 未読バッジ */
+.unread-badge {
+    margin-left: auto;
+    background: var(--line-green);
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 12px;
+    font-size: var(--font-sm);
+}
+
+/* ログアウト */
+.logout-btn {
+    margin: auto 16px 16px;
+    border: none;
+    background: #f66;
+    color: #fff;
+    padding: 6px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* ── resizer ── */
+.resizer, #conv-resizer {
+    width: 4px; min-width: 4px;
+    height: 100%;
+    cursor: col-resize;
+    background: transparent;
+    user-select: none;
+}
+.resizer:hover, #conv-resizer:hover {
+    background: var(--resizer-hover);
+}
+
+/* ── chat window ── */
+.chat-window {
+    grid-column: 4;
+    display: grid;
+    grid-template-rows: 48px 1fr 48px;
+    min-width: 0;
+    height: 100%;
+}
+.room-bar {
+    grid-row: 1;
+    height: 48px;
+    padding: 12px 24px;
+    border-bottom: 1px solid var(--border-gray);
+    background: #fff;
+    font-size: 14px;
+}
+ul#chat {
+    grid-row: 2;
+    margin: 0;
+    padding: 8px 24px;
+    list-style: none;
+    overflow-y: auto;
+}
+#input-bar {
+    grid-row: 3;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    background: #fff;
+    border-top: 1px solid var(--border-light);
+}
+
+/* ── メッセージ行 ── */
+.msg {
+    display: flex;
+    gap: 6px;
+    margin: var(--msg-gap-group) 0;
+}
+.msg.separate {
+    margin-top: var(--msg-gap-separate);
+}
+.msg.other {
+    flex-direction: row;
+    justify-content: flex-start;
+    padding-left: 24px;
+}
+.msg.mine {
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    padding-right: 24px;
+    align-items: flex-end;
+}
+
+/* ── メッセージバブル ── */
+.avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: #D8D8D8;
+    color: #fff;
+    font-weight: bold;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.bubble {
+    max-width: 60%;
+    padding: var(--bubble-padding-y) var(--bubble-padding-x);
+    border-radius: var(--bubble-radius);
+    font-size: 14px;
+    line-height: 1.4;
+    position: relative;
+}
+.msg.mine .bubble {
+    background: var(--line-green);
+    color: #fff;
+}
+.msg.other .bubble {
+    background: #fff;
+    border: 1px solid var(--border-light);
+    color: var(--color-text);
+}
+.bubble::after {
+    content: "";
+    position: absolute;
+    width: var(--bubble-pointer-size);
+    height: var(--bubble-pointer-size);
+    bottom: var(--bubble-pointer-bottom);
+    background: inherit;
+    transform: rotate(45deg);
+}
+.msg.mine .bubble::after {
+    right: var(--bubble-pointer-offset);
+}
+.msg.other .bubble::after {
+    left: var(--bubble-pointer-offset);
+    border-left: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-light);
+}
+
+/* ── 連続メッセージ間の角丸制御 ── */
+.msg.mine:not(.separate) .bubble {
+    border-top-left-radius: var(--bubble-connected-radius);
+    border-bottom-left-radius: var(--bubble-connected-radius);
+}
+.msg.other:not(.separate) .bubble {
+    border-top-right-radius: var(--bubble-connected-radius);
+    border-bottom-right-radius: var(--bubble-connected-radius);
+}
+
+/* ── タイムスタンプ／既読 ── */
+.timestamp, .read {
+    display: block;
+    font-size: var(--font-sm);
+    color: var(--color-ts);
+    text-align: right;
+}
+.timestamp { margin-top: 4px; }
+.read      { margin-top: 2px; }
+
+/* ── モーダルオーバーレイ ── */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+.modal {
+    background: #fff;
+    padding: 24px;
+    border-radius: 8px;
+    width: 320px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.modal h2 {
+    margin-top: 0;
+    font-size: 18px;
+}
+.modal input {
+    width: 100%;
+    padding: 8px;
+    margin: 16px 0;
+    border: 1px solid var(--border-light);
+    border-radius: 4px;
+    font-size: 14px;
+}
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+.btn-cancel {
+    border: none;
+    padding: 6px 12px;
+    background: #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.btn-create {
+    border: none;
+    padding: 6px 12px;
+    background: var(--line-green);
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* ── モバイル対応 ── */
+@media(max-width:959px){
+    .app { display:block; }
+    .nav, .conversations, #conv-resizer { display:none; }
+    #room-select  { display:block; }
+}
