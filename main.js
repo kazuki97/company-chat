@@ -25,17 +25,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const btn = document.getElementById('allow-notify');
   if (btn) {
     btn.addEventListener('click', async function() {
+      alert("クリック：スタート"); // 1
+
       // 通知許可
       if ("Notification" in window && Notification.permission !== "granted") {
+        alert("クリック：通知許可ダイアログ出す直前"); // 2
         const permission = await Notification.requestPermission();
+        alert("クリック：通知許可ダイアログ閉じた permission=" + permission); // 3
         if (permission !== "granted") {
           alert("通知を許可しないとPush通知は受け取れません。");
           return;
         }
       }
+      alert("クリック：通知許可OK、購読へ進む"); // 4
+
       // Push購読
       if ('serviceWorker' in navigator && 'PushManager' in window) {
         navigator.serviceWorker.ready.then(async reg => {
+          alert("クリック：SW ready"); // 5
           const sub = await reg.pushManager.getSubscription();
           if (!sub) {
             const applicationServerKey = urlBase64ToUint8Array(VAPID_PUBLIC_KEY);
@@ -43,10 +50,12 @@ document.addEventListener('DOMContentLoaded', () => {
               userVisibleOnly: true,
               applicationServerKey
             }).then(subscription => {
+              alert("クリック：購読登録完了"); // 6
               console.log("Push購読情報:", JSON.stringify(subscription));
               alert("購読情報が発行されました。");
             });
           } else {
+            alert("クリック：既に購読済み"); // 7
             console.log("既に購読済み:", JSON.stringify(sub));
             alert("この端末はすでにPush購読済みです。");
           }
@@ -54,9 +63,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-
-  // --- この下は他の初期化（navChatsなど） ---
 });
+
 
 
 
