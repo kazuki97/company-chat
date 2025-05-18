@@ -510,40 +510,35 @@ ul#chat {
     flex-shrink: 0;
 }
 .bubble {
-    max-width: 65%;                             /* 幅を少し広げ */
-    padding: var(--bubble-padding-y) var(--bubble-padding-x);
-    border-radius: var(--bubble-radius);
-    font-size: 15px;                            /* フォントを少し大きく */
-    line-height: 1.5;                           /* 行間をゆったり */
     position: relative;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);    /* 軽いシャドウを追加 */
-}
-.msg.mine .bubble {
-    /* 背景色は既存のLINEグリーンをそのまま使う */
-    background-color: var(--color-primary); /* #06C755 */
-    color: #FFFFFF;
-    /* LINE公式は約18pxの角丸 */
+    /* 右端に36pxのスペースを確保、他のpadding/右余白は消す */
+    padding: 8px 36px 8px 12px;   /* 上 右 下 左 */
     border-radius: 18px;
-    /* 上下8px／左右12pxが公式に近い */
-    padding: 8px 12px;
-    font-size: 14px;
-    line-height: 1.4;
-    /* 影の薄さも公式に近づける */
+    max-width: 65%;
+    font-size: 15px;
+    line-height: 1.5;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    color: #222;
+    border: 1px solid #E5E5EA;
+    margin-bottom: 2px;
+    word-break: break-word;
+}
+/* 右側バブル、左側バブルのpaddingは指定不要。色・角丸・影だけ残す */
+.msg.mine .bubble {
+    background-color: var(--color-primary);
+    color: #fff;
+    border-radius: 18px;
     box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
-
 .msg.other .bubble {
-    background-color: #FFFFFF;
-    border: 1px solid #E5E5EA;              /* 少し薄めのグレー */
+    background-color: #fff;
+    border: 1px solid #E5E5EA;
     color: var(--color-text);
     border-radius: 18px;
-    padding: 8px 12px;
-    font-size: 14px;
-    line-height: 1.4;
     box-shadow: 0 1px 2px rgba(0,0,0,0.05);
 }
-
-
+/* バブル三角もそのまま */
 .bubble::after {
     content: "";
     position: absolute;
@@ -552,7 +547,7 @@ ul#chat {
     bottom: var(--bubble-pointer-bottom);
     background: inherit;
     transform: rotate(45deg);
-    box-shadow: inherit;                        /* 親のシャドウを継承 */
+    box-shadow: inherit;
 }
 .msg.mine .bubble::after {
     right: var(--bubble-pointer-offset);
@@ -562,9 +557,7 @@ ul#chat {
     border-left: 1px solid var(--border-light);
     border-bottom: 1px solid var(--border-light);
 }
-
-
-/* タイムスタンプ */
+/* タイムスタンプ・既読もそのまま */
 .timestamp {
     display: block;
     font-size: var(--font-sm);
@@ -572,41 +565,38 @@ ul#chat {
     text-align: right;
     margin-top: 4px;
 }
-
-/* 既読ラベル */
 .read {
     display: block;
     font-size: var(--font-sm);
-    color: var(--color-text);  /* ダークテキスト色に変更 */
+    color: var(--color-text);
     text-align: right;
     margin-top: 2px;
-    font-weight: bold;         /* 強調表示 */
+    font-weight: bold;
 }
-
-
-/* ── メッセージ「⋮」メニュー用スタイル ── */
-.bubble {
-  position: relative;
-  padding-right: 32px; /* メニューボタン分の余白 */
-}
-
 .bubble-text {
-  display: block;
-  white-space: pre-wrap;
+    display: block;
+    white-space: pre-wrap;
 }
-
+/* ⋮ボタンを「本文に被らない右端」に絶対配置 */
 .msg-menu-btn {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  font-size: 18px;
-  line-height: 1;
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    opacity: 0.7;
+    z-index: 10;
+    padding: 0;
 }
-
-/* ── メッセージ「⋮」メニュー用スタイル ── */
+.bubble:hover .msg-menu-btn { opacity: 1; }
+/* スマホでは⋮非表示 */
+@media (max-width: 700px) {
+    .msg-menu-btn { display: none !important; }
+}
+/* メニューそのまま */
 .msg-menu {
     display: none;
     position: absolute;
@@ -620,21 +610,22 @@ ul#chat {
     border-radius: 4px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     z-index: 100;
-    color: var(--color-text); /* ← 追加 */
-  }
-  .msg-menu.open {
+    color: var(--color-text);
+}
+.msg-menu.open {
     display: block;
-  }
-  .msg-menu .menu-item {
+}
+.msg-menu .menu-item {
     padding: 6px 12px;
     cursor: pointer;
     white-space: nowrap;
     font-size: 14px;
-    color: inherit; /* 親の color を継承 */
-  }
-  .msg-menu .menu-item:hover {
+    color: inherit;
+}
+.msg-menu .menu-item:hover {
     background: #f5f5f5;
-  }
+}
+
   
 
 
