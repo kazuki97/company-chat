@@ -4,22 +4,121 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>チャットログイン</title>
-  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      background: #f5f6f7;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Noto Sans JP', 'Segoe UI', 'Arial', sans-serif;
+    }
+    .login-panel {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+      padding: 48px 32px 32px 32px;
+      width: 340px;
+      max-width: 94vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      animation: fadeIn 0.7s;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(24px);}
+      100% { opacity: 1; transform: none;}
+    }
+    .login-logo {
+      color: #06C755;
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 16px;
+      letter-spacing: 2px;
+    }
+    .login-panel h2 {
+      margin: 0 0 10px 0;
+      font-size: 1.35rem;
+      font-weight: 500;
+      color: #222;
+    }
+    .login-panel form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .login-panel input[type="email"],
+    .login-panel input[type="password"] {
+      font-size: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 10px 14px;
+      background: #fafbfc;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .login-panel input:focus {
+      border-color: #06C755;
+      background: #fff;
+    }
+    .login-panel button[type="submit"] {
+      margin-top: 12px;
+      background: #06C755;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 0;
+      font-size: 1.12rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+      transition: background 0.15s;
+    }
+    .login-panel button[type="submit"]:hover {
+      background: #13e166;
+    }
+    /* --- スマホ対応 --- */
+    @media (max-width: 600px) {
+      body {
+        align-items: flex-start;
+        justify-content: center;
+        min-height: 100vh;
+        padding-top: 12vw;
+      }
+      .login-panel {
+        width: 96vw;
+        max-width: 99vw;
+        padding: 32px 4vw 28px 4vw;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        border-radius: 14px;
+        gap: 18px;
+      }
+      .login-logo {
+        font-size: 2rem;
+        margin-bottom: 10px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h2>ログイン</h2>
-  <form id="login-form">
-    <input type="email" id="email" placeholder="メールアドレス" required />
-    <input type="password" id="password" placeholder="パスワード" required />
-    <button type="submit">ログイン</button>
-  </form>
-  
+  <div class="login-panel">
+    <div class="login-logo">LINE</div>
+    <h2>ログイン</h2>
+    <form id="login-form">
+      <input type="email" id="email" placeholder="メールアドレス" required />
+      <input type="password" id="password" placeholder="パスワード" required />
+      <button type="submit">ログイン</button>
+    </form>
+  </div>
 
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
-
   <script>
+    // ここにlogin.jsのロジックをそのまま貼り付け
     console.log("🔑 login.js: start");
 
     const firebaseConfig = {
@@ -32,21 +131,16 @@
       measurementId:     "G-KDL141H28M"
     };
 
-    /* Firebaseを初期化 */
     const app = firebase.apps.length
       ? firebase.app()
       : firebase.initializeApp(firebaseConfig);
 
     const auth = firebase.auth(app);
 
-   
-
-    /* 永続化 LOCAL */
     auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
         .then(() => console.log("🔑 persistence = LOCAL"))
         .catch(err => console.error("🔑 setPersistence failed", err));
 
-    /* 既にログイン済みなら即遷移 */
     auth.onAuthStateChanged(user => {
       if (user) {
         console.log("🔑 already signed-in:", user.email);
@@ -54,7 +148,6 @@
       }
     });
 
-    /* フォーム送信でログイン */
     document.getElementById("login-form").addEventListener("submit", async e => {
       e.preventDefault();
       const email = document.getElementById("email").value.trim();
