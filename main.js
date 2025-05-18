@@ -402,20 +402,38 @@ async function renderRoomList(user) {
       : lastMsgSnap.docs[0].data().text.slice(0, 50);
 
     const li = document.createElement("li");
-    li.classList.toggle("active", roomId === currentRoom);
-    li.onclick = () => selectRoom(roomId, user);
+li.classList.toggle("active", roomId === currentRoom);
+li.onclick = () => selectRoom(roomId, user);
 
-    const av = document.createElement("div");
-    av.className = "conv-avatar";
-    av.textContent = roomId.charAt(0).toUpperCase();
-    li.appendChild(av);
+// --- アバター（画像優先、なければ頭文字1文字） ---
+const av = document.createElement("div");
+av.className = "conv-avatar";
+if (data.avatarUrl) {
+  av.innerHTML = `<img src="${data.avatarUrl}" alt="${data.title || roomId}">`;
+} else {
+  av.textContent = (data.title || roomId).charAt(0).toUpperCase();
+}
+li.appendChild(av);
 
-    const info = document.createElement("div");
-    info.className = "conv-info";
-    info.textContent = `${data.title || roomId} ${preview}`;
-    li.appendChild(info);
+// --- 2行化（ルーム名＋最新メッセージ） ---
+const info = document.createElement("div");
+info.className = "conv-info";
+info.innerHTML = `
+  <div class="conv-name">${data.title || roomId}</div>
+  <div class="last-message">${preview}</div>
+`;
+li.appendChild(info);
 
-    ul.appendChild(li);
+// --- 未読バッジ（未読数が1以上なら表示） ---
+if (data.unreadCount > 0) {
+  const unreadBadge = document.createElement("span");
+  unreadBadge.className = "unread-badge";
+  unreadBadge.textContent = data.unreadCount;
+  li.appendChild(unreadBadge);
+}
+
+ul.appendChild(li);
+
   }
 
   isRendering = false; 
