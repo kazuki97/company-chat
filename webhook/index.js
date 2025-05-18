@@ -5,16 +5,24 @@ const { readFileSync } = require('fs');
 // ======================================
 // Firebase Admin SDK の初期化
 // ======================================
-const serviceAccount = JSON.parse(
-  readFileSync(
-    './company-chat-app-firebase-adminsdk-fbsvc-5e858554dc.json',
-    'utf-8'
-  )
-);
+let serviceAccount;
+if (process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON) {
+  // 本番（Fly.ioなど環境変数）
+  serviceAccount = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON);
+} else {
+  // ローカル（ファイル読み込み）
+  serviceAccount = JSON.parse(
+    require('fs').readFileSync(
+      './company-chat-app-firebase-adminsdk-fbsvc-5e858554dc.json',
+      'utf-8'
+    )
+  );
+}
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
+
 const db = admin.firestore();
 
 // ======================================
