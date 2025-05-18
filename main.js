@@ -4,7 +4,7 @@
  *    ・renderShippingList の body.innerHTML を修正し、
  *      詳細にお客様情報…（中略）
  * =======================================================*/
-// Service Worker登録（これが1行目）
+// Service Worker登録（main.jsの一番上）
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./service-worker.js')
@@ -17,7 +17,40 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+// VAPID公開鍵を設定
+const VAPID_PUBLIC_KEY = "BLp8KDJ6igdB4nvN-utZWvXy3QJgGh-kOUFQpePmtgwU2SVuykNcSxEuGyBe3EXgE9duqgJVNicj3p7Qw9E7ha4";
+
+// Service Worker登録後、Push購読（subscribe）
+if ('serviceWorker' in navigator && 'PushManager' in window) {
+  navigator.serviceWorker.ready.then(async reg => {
+    const sub = await reg.pushManager.getSubscription();
+    if (!sub) {
+      const applicationServerKey = urlBase64ToUint8Array(VAPID_PUBLIC_KEY);
+      reg.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey
+      }).then(subscription => {
+        // 通知購読情報（JSON）をとりあえずコンソールに出す
+        console.log("Push購読情報:", JSON.stringify(subscription));
+        alert("通知購読が完了しました。管理画面に購読情報を貼り付けてください。");
+      });
+    }
+  });
+}
+
+// Base64文字列→Uint8Array変換用
+function urlBase64ToUint8Array(base64String) {
+  const padding = '='.repeat((4 - base64String.length % 4) % 4);
+  const base64 = (base64String + padding)
+    .replace(/-/g, '+').replace(/_/g, '/');
+  const raw = window.atob(base64);
+  return Uint8Array.from([...raw].map(c => c.charCodeAt(0)));
+}
+
 console.log("🚀 main.js v16 loaded");
+
+// （以降は既存のmain.jsのまま…）
+
 
 const db   = firebase.firestore();
 const auth = firebase.auth();
