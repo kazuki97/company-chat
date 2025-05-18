@@ -1,9 +1,13 @@
 {
-    // Live Server 起動時にブラウザキャッシュを無効化する
-    "liveServer.settings.NoBrowserCache": true,
-  
-    // （必要があればポート番号やルートも指定できます）
-    "liveServer.settings.port": 5500,
-    "liveServer.settings.root": "/"
-  }
-  
+  // Live Server 起動時にブラウザキャッシュを無効化する
+  "liveServer.settings.NoBrowserCache": true,
+
+  // ポート番号（デフォルト5500）
+  "liveServer.settings.port": 5502,
+
+  // ルートディレクトリ
+  "liveServer.settings.root": "/",
+
+  // LAN内の他のデバイスからアクセス可能にする
+  "liveServer.settings.host": "0.0.0.0"
+}

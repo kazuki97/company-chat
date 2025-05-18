@@ -140,21 +140,18 @@ body {
     align-items: center;
     padding: 12px;
 }
-@media (max-width: 699px) {
-  .add-room {
-    width: 32px !important;
-    height: 32px !important;
-    min-width: 32px !important;
-    min-height: 32px !important;
-    max-width: 32px !important;
-    max-height: 32px !important;
-    font-size: 20px !important;
-    flex-shrink: 0 !important;
-    flex-grow: 0 !important;
-    padding: 0 !important;
-  }
+.add-room {
+    width: 32px;
+    height: 32px;
+    margin-right: 8px;
+    border: none;
+    background: var(--line-green);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
 }
-
 .conversations-header input {
     flex: 1;
     padding: 8px;
@@ -1458,341 +1455,232 @@ ul#chat {
     }
   }
 
-  /* PC版では下部ナビゲーションを非表示に */
-@media (min-width: 700px) {
-  .bottom-nav {
-    display: none !important;
+  /* 売上登録モーダル用の追加CSS */
+.modal-large {
+    width: 95%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+  }
+  
+  .btn-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #888;
   }
 
-  .chat-window {
-    padding-bottom: 0 !important;
-  }
+  /* 統合後 styles_phone.css（LINE風UI） */
 
-  .conversations, .nav, #conv-resizer {
-    display: block !important;
-  }
-
-  .chat-window {
-    display: grid !important;
-  }
+/* フォント・カラーの調整（チャットアプリと同じ） */
+body {
+  margin: 0;
+  font-family: var(--font-main);
+  background-color: var(--gray-bg);
+  color: var(--color-text);
 }
 
-
-
-/* 売上登録モーダル - LINE風UI統合版 */
-#sales-modal {
-  background-color: rgba(0, 0, 0, 0.4);
-  font-family: "LINE Seed Sans", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
-}
-
-#sales-modal .modal-large {
-  max-width: 90%;
-  max-height: 85vh;
-  background-color: #fff;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-#sales-modal header {
-  background-color: #06C755; /* LINEグリーン */
+/* LINE風ヘッダー */
+header {
+  background-color: var(--line-green);
   color: #fff;
   text-align: center;
-  padding: 0.8rem;
+  padding: 12px;
   font-size: 18px;
   font-weight: bold;
-  border-radius: 16px 16px 0 0;
 }
 
-#sales-modal main {
-  padding: 0.8rem;
-  overflow-y: auto;
-  flex: 1;
+/* メインコンテンツ */
+main {
+  padding: var(--spacing-md);
+  background: #fff;
 }
 
-/* 各画面（セクション）の表示制御 */
-#sales-modal .screen {
+/* セクション表示制御 */
+.screen {
   display: none;
 }
 
-#sales-modal .screen.active {
+.screen.active {
   display: block;
 }
 
-/* ボタンスタイル統一（売上登録、消耗品管理） */
-#sales-modal button {
-  background-color: #fff;
-  color: #06C755;
-  border: 1px solid #06C755;
-  padding: 0.6rem;
-  margin: 0.3rem 0;
-  border-radius: 18px;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.2s, color 0.2s, opacity 0.2s;
+/* LINE風のボタン */
+button {
   width: 100%;
-  box-sizing: border-box;
+  padding: var(--spacing-sm) var(--spacing-md);
+  margin: var(--spacing-xs) 0;
+  font-size: 14px;
+  background-color: var(--line-green);
+  color: #fff;
+  border: none;
+  border-radius: 18px;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  transition: background-color 0.2s, opacity 0.2s;
 }
 
-#sales-modal button:hover {
-  background-color: #06C755;
-  color: #fff;
+button:hover {
   opacity: 0.9;
 }
 
-/* 戻るボタン（赤系） */
-#sales-modal button[id^="btn-back"] {
-  color: #ff3b30;
-  border-color: #ff3b30;
+/* 戻るボタン（LINE風：赤） */
+button[id^="btn-back"] {
+  background-color: #f44336;
 }
 
-#sales-modal button[id^="btn-back"]:hover {
-  background-color: #ff3b30;
-  color: #fff;
+button[id^="btn-back"]:hover {
+  background-color: #d32f2f;
 }
 
-/* 「カゴを見る」ボタン調整 */
-#sales-modal #fixed-cart-button {
-  background-color: #06C755;
-  border-radius: 0 0 16px 16px;
-  padding: 0;
-  margin: 0;
-}
-
-#sales-modal #fixed-cart-button button {
-  background-color: transparent;
-  color: #fff;
-  border-radius: 0 0 16px 16px;
-  border: none;
-  font-size: 16px;
-  padding: 1rem;
-}
-
-#sales-modal #fixed-cart-button button:disabled {
-  background-color: #ddd;
-  color: #888;
-}
-
-/* 入力フォームの調整 */
-#sales-modal #checkout-form input,
-#sales-modal #checkout-form select {
-  padding: 0.6rem;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  font-size: 14px;
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
-  width: 100%;
-  box-sizing: border-box;
-  margin-bottom: 0.5rem;
-}
-
-#sales-modal #checkout-form label {
-  color: #555;
-  font-size: 14px;
-  margin-top: 0.5rem;
-}
-
-/* 商品タイル表示（LINE風） */
-#sales-modal #product-tiles {
+/* 商品タイル（LINE風） */
+#product-tiles {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  gap: 10px;
-  margin-bottom: 1rem;
+  grid-gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
 }
 
-#sales-modal .product-tile {
-  background-color: #06C755;
+.product-tile {
+  background-color: var(--line-green);
   color: #fff;
-  border-radius: 12px;
-  padding: 0.6rem;
-  font-size: 14px;
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm);
   text-align: center;
   cursor: pointer;
   user-select: none;
+  font-size: 14px;
+  transition: background-color 0.2s;
 }
 
-#sales-modal .product-tile:hover {
-  background-color: #05a74b;
+.product-tile:hover {
+  background-color: #05a547;
 }
 
-/* カゴ内アイテム調整 */
-#sales-modal #cart-items .cart-item {
+/* カート項目の表示（LINE風） */
+#cart-items .cart-item {
   display: flex;
   justify-content: space-between;
-  padding: 0.5rem;
-  background-color: #f8f8f8;
-  border-radius: 8px;
-  margin-bottom: 0.4rem;
+  align-items: center;
+  padding: var(--spacing-sm) 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+#cart-total {
+  font-size: 16px;
+  font-weight: bold;
+  text-align: right;
+  margin-bottom: var(--spacing-md);
+}
+
+/* フォームスタイル（LINE風） */
+#checkout-form label {
+  display: block;
+  margin-top: var(--spacing-sm);
   font-size: 14px;
 }
 
-/* 合計金額表示調整 */
-#sales-modal #cart-total {
-  text-align: right;
-  font-size: 16px;
-  color: #333;
-  margin: 0.8rem 0;
+#checkout-form input,
+#checkout-form select {
+  width: 100%;
+  padding: var(--spacing-sm);
+  margin-bottom: var(--spacing-xs);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  font-size: 14px;
 }
 
-/* スクロールバー調整（LINE風） */
-#sales-modal main::-webkit-scrollbar {
-  width: 4px;
-}
-
-#sales-modal main::-webkit-scrollbar-thumb {
-  background-color: rgba(0,0,0,0.2);
-  border-radius: 4px;
-}
-
-/* 不要な閉じるボタンを非表示 */
-#sales-modal .btn-close {
-  display: none !important;
-}
-
-
-/* ── 日付区切り線 ── */
-.date-divider {
-  display: flex;
-  align-items: center;
-  text-align: center;
-  margin: 12px 0;
-  color: #888;
-  font-size: 12px;
-  user-select: none;
-}
-
-.date-divider::before,
-.date-divider::after {
-  content: "";
-  flex: 1;
-  border-bottom: 1px solid #ccc;
-}
-
-.date-divider:not(:empty)::before {
-  margin-right: 10px;
-}
-
-.date-divider:not(:empty)::after {
-  margin-left: 10px;
-}
-
-/* ── 固定ヘッダー ── */
-.fixed-date-header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background: rgba(255, 255, 255, 0.9); /* 半透明の白にして少し透け感を持たせる */
-  padding: 6px 12px; /* 少し広めに */
-  text-align: center;
-  border-bottom: 1px solid #ddd; /* 明るめのライン */
-  color: #666;
-  font-size: 12px; /* やや小さめにしてすっきり見せる */
-  font-weight: normal; /* 太字を解除して自然な感じに */
-  backdrop-filter: blur(3px); /* 背景をぼかす（最近のLINE風） */
-  user-select: none;
-}
-
-/* ── 既読人数表示スタイル ── */
-.read-count {
-  display: block;
-  text-align: right;
-  color: #888;
-  font-size: 11px;
-  margin-top: 2px;
-  margin-right: 4px;
-  user-select: none;
-}
-
-/* ── 既読メンバーポップアップ ── */
-.overlay.hidden {
-  display: none;
-}
-
-.overlay {
+/* ログインフォーム（モーダル） */
+.login-form {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.4);
+  background: rgba(0,0,0,0.4);
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.login-form form {
+  background: #fff;
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  width: 90%;
+  max-width: 320px;
+  text-align: center;
+}
+
+.login-form input {
+  width: 100%;
+  padding: var(--spacing-sm);
+  margin: var(--spacing-xs) 0;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+}
+
+/* モーダル（一般的な表示） */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1100;
+}
+
+.modal-content {
+  background: #fff;
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* 固定表示の「かごを見る」ボタン（LINE風） */
+#fixed-cart-button {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: var(--line-green);
   z-index: 100;
 }
 
-.modal.small-modal {
-  background: #fff;
-  padding: 16px;
-  border-radius: 10px;
-  width: 280px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  position: relative;
+#fixed-cart-button button {
+  width: 100%;
+  padding: var(--spacing-sm);
+  background-color: transparent;
+  color: #fff;
+  border-radius: 0;
+  font-size: 16px;
+  font-weight: bold;
+  box-shadow: none;
+  transition: opacity 0.2s;
 }
 
-.modal.small-modal h3 {
-  margin-top: 0;
-  font-size: 14px;
-  color: #333;
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 8px;
-  margin-bottom: 12px;
+#fixed-cart-button button:hover {
+  opacity: 0.9;
 }
 
-#read-members-list {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 12px;
-  max-height: 200px;
-  overflow-y: auto;
-  font-size: 13px;
-  color: #555;
-}
+/* スマホ向け微調整（iPhone対応） */
+@media (max-width: 699px) {
+  body {
+    padding-bottom: calc(56px + env(safe-area-inset-bottom));
+  }
 
-#read-members-list li {
-  padding: 6px 0;
-  border-bottom: 1px solid #eee;
-}
+  main {
+    padding-bottom: calc(var(--spacing-lg) + env(safe-area-inset-bottom));
+  }
 
-#read-members-list li:last-child {
-  border-bottom: none;
-}
-
-#close-read-members-btn {
-  display: block;
-  margin-left: auto;
-  padding: 4px 10px;
-  font-size: 12px;
-  cursor: pointer;
-  background: #eee;
-  border: none;
-  border-radius: 6px;
-}
-
-.add-room {
-  width: 32px !important;
-  height: 32px !important;
-  min-width: 32px !important;
-  min-height: 32px !important;
-  max-width: 32px !important;
-  max-height: 32px !important;
-  margin-right: 8px !important;
-  background: #06C755 !important;  /* LINEグリーン */
-  color: #fff !important;          /* 白抜き */
-  border: none !important;
-  border-radius: 50% !important;
-  font-size: 20px !important;
-  line-height: 1 !important;
-  cursor: pointer !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
-  padding: 0 !important;
-}
-
-.add-room:active,
-.add-room:focus {
-  outline: none !important;
-  background: #05b64b !important; /* 少し濃いグリーンに変化 */
+  #fixed-cart-button {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 }
