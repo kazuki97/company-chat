@@ -585,12 +585,14 @@ ul#chat {
     border: none;
     background: transparent;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 22px;
     line-height: 1;
-    opacity: 0.7;
+    opacity: 1;
+    color: #222 !important; /* ←どのバブル色でも必ず見える */
     z-index: 10;
     padding: 0;
 }
+
 .bubble:hover .msg-menu-btn { opacity: 1; }
 
 /* メニューそのまま */
