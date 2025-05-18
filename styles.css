@@ -3,35 +3,37 @@
   --gray-bg: #F5F7F7;
   --sidebar-width: 64px;
   --conv-width: 280px;
-  --font-main: "LINE Seed Sans", "Helvetica Neue", Arial, sans-serif;
-  --font-size-sm: 12px;
-  --font-size-base: 14px;
-  --font-size-lg: 18px;
-  --line-height: 1.4;
+  --font-main: "LINE Seed Sans","Helvetica Neue",Arial,sans-serif;
+  --font-sm: 10px;
   --color-text: #1C1C1E;
   --color-ts: #8E8E93;
   --border-light: #E5E5EA;
   --border-gray: #DDDDDD;
+  --resizer-hover: #CFD0D2;
+  --bubble-padding-y: 8px;
+  --bubble-padding-x: 16px;
+  --bubble-radius: 24px;
+  --bubble-pointer-size: 8px;
+  --bubble-pointer-offset: 14px;
+  --bubble-pointer-bottom: 2px;
+  --msg-gap-group: 4px;
+  --msg-gap-separate: 16px;
+  --color-primary: #06C755;
   --color-bg: #FFFFFF;
   --color-surface: #F0F0F0;
   --color-border: #E0E0E0;
-  --resizer-hover: #CFD0D2;
-  --bubble-radius: 18px;
-  --bubble-padding-y: 8px;
-  --bubble-padding-x: 12px;
-  --bubble-pointer-size: 10px;
-  --bubble-pointer-bottom: 6px;
-  --bubble-pointer-offset: 14px;
-  --msg-gap-group: 4px;
-  --msg-gap-separate: 16px;
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 16px;
-  --shadow-light: 0 1px 3px rgba(0,0,0,0.1);
   --spacing-xs: 4px;
   --spacing-sm: 8px;
   --spacing-md: 16px;
   --spacing-lg: 24px;
+  --font-size-sm: 12px;
+  --font-size-base: 14px;
+  --font-size-lg: 18px;
+  --line-height: 1.5;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --shadow-light: 0 1px 3px rgba(0,0,0,0.1);
   --profile-avatar-size: 32px;
   --popover-bg: var(--color-bg);
   --popover-shadow: 0 4px 12px rgba(0,0,0,0.1);
@@ -39,7 +41,8 @@
   --popover-padding: 8px;
 }
 
-/* ========== ユーティリティ ========== */
+/* ======== ユーティリティ・レイアウト ======== */
+.hidden { display: none !important; }
 * { box-sizing: border-box; }
 body {
   margin: 0;
@@ -48,108 +51,75 @@ body {
   height: 100vh;
   overflow: hidden;
 }
-.hidden { display: none !important; }
-
-/* ========== レイアウト ========== */
 .app {
   display: grid;
   grid-template-columns: var(--sidebar-width) var(--conv-width) 4px 1fr;
   grid-template-rows: 48px 1fr 48px;
   height: 100%;
 }
-.nav, .conversations, #conv-resizer, .chat-window {
-  grid-row: 1 / -1;
-}
+.nav, .conversations, #conv-resizer, .chat-window { grid-row: 1 / -1; }
 
-/* ========== サイドナビ ========== */
+/* ======== サイドナビ ======== */
 .nav {
   background: #0f1419;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: var(--spacing-md) 0;
-  position: relative;
   z-index: 9999;
+  position: relative;
 }
 .nav-divider {
-  width: 60%; height: 1px;
-  margin: var(--spacing-md) 0;
-  background: var(--border-gray);
+  width: 60%; height: 1px; margin: var(--spacing-md) 0; background: var(--border-gray);
 }
 .nav-icon {
-  width: 48px; height: 48px;
-  margin: var(--spacing-sm) 0;
-  border: none;
-  background: none;
-  color: #fff;
-  font-size: 24px;
-  line-height: 1;
-  cursor: pointer;
+  width: 48px; height: 48px; margin: var(--spacing-sm) 0;
+  border: none; background: none; color: #fff; font-size: 24px; line-height: 1;
+  cursor: pointer; border-radius: 50%; display: flex; align-items: center; justify-content: center;
   transition: background 0.2s;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
 }
-.nav-icon:hover,
-.nav-icon:focus { background: rgba(255,255,255,0.1); }
+.nav-icon:hover, .nav-icon:focus { background: rgba(255,255,255,0.1); }
 
-/* ========== トーク一覧 ========== */
+/* ======== トーク一覧 ======== */
 .conversations {
-  display: flex;
-  flex-direction: column;
+  display: flex; flex-direction: column;
   border-right: 1px solid var(--border-light);
-  height: 100%;
-  min-width: 0;
-  z-index: 1; position: relative;
+  height: 100%; min-width: 0; z-index: 1; position: relative;
 }
 .conversations-header {
-  display: flex; align-items: center;
-  padding: 12px;
+  display: flex; align-items: center; padding: 12px;
 }
 .conversations-header input {
-  flex: 1; padding: 8px; font-size: 14px;
-  border: 1px solid #ccc; border-radius: 4px;
+  flex: 1; padding: 8px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px;
 }
 #conv-list {
   flex: 1; margin: 0; padding: 0;
-  list-style: none;
-  overflow-y: auto;
+  list-style: none; overflow-y: auto;
 }
 #conv-list li {
   display: flex; align-items: center; gap: 12px;
-  padding: 10px 18px;
-  border-radius: 16px;
-  cursor: pointer;
-  transition: background 0.13s;
-  margin: 4px 6px;
-  min-height: 56px;
+  padding: 10px 18px; border-radius: 16px; cursor: pointer; transition: background 0.13s;
+  margin: 4px 6px; min-height: 56px;
 }
 #conv-list li:hover   { background: #f3f6fa; }
 #conv-list li.active  { background: #e8f3ff; }
 .conv-avatar {
-  width: 44px; height: 44px;
-  background: #d1ffd6; color: #06c755;
-  border-radius: 50%; font-weight: bold; font-size: 22px;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
-  flex-shrink: 0; overflow: hidden;
+  width: 44px; height: 44px; background: #d1ffd6; color: #06c755; border-radius: 50%;
+  font-weight: bold; font-size: 22px; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06); flex-shrink: 0; overflow: hidden;
 }
 .conv-avatar img {
   width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
 }
 .conv-info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  white-space: nowrap; overflow: hidden;
+  flex: 1; display: flex; flex-direction: column; min-width: 0; white-space: nowrap; overflow: hidden;
 }
 .conv-name {
-  font-weight: bold; color: #222; font-size: 15px; margin-bottom: 2px;
-  overflow: hidden; text-overflow: ellipsis; line-height: 1.15;
+  font-weight: bold; color: #222; font-size: 15px; line-height: 1.15;
+  margin-bottom: 2px; overflow: hidden; text-overflow: ellipsis;
 }
 .last-message {
-  font-size: 13px; color: #8e8e93; line-height: 1.18;
-  overflow: hidden; text-overflow: ellipsis;
+  font-size: 13px; color: #8e8e93; line-height: 1.18; overflow: hidden; text-overflow: ellipsis;
 }
 .unread-badge {
   background: #06C755; color: #fff; font-weight: bold; font-size: 12px;
@@ -157,138 +127,79 @@ body {
   text-align: center; box-shadow: 0 1px 2px rgba(0,0,0,0.08);
 }
 
-/* ========== チャットウィンドウ ========== */
+/* ======== チャットウィンドウ・バブル ======== */
 .chat-window {
-  grid-column: 4;
-  display: grid;
-  grid-template-rows: 48px auto 1fr 48px;
-  min-width: 0; height: 100%;
+  grid-column: 4; display: grid;
+  grid-template-rows: 48px auto 1fr 48px; min-width: 0; height: 100%;
 }
 .room-bar {
   display: flex; align-items: center; justify-content: space-between;
-  height: 54px; padding: 0 10px;
-  background: #fff; border-bottom: 1px solid #e5e5ea;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
-  position: sticky; top: 0; z-index: 20;
+  grid-row: 1; height: 48px; padding: 0 24px; border-bottom: 1px solid var(--border-gray);
+  background: #fff; font-size: 14px;
 }
-.room-title {
-  flex: 1; text-align: center; font-size: 19px; font-weight: bold; color: #222;
-  letter-spacing: 0.02em; line-height: 1;
-}
-.search-btn {
-  background: none; border: none; padding: 0 6px; color: #8e8e93; cursor: pointer;
-  display: flex; align-items: center; transition: color .15s;
-}
-.search-btn:hover { color: #06c755; }
+.room-bar .room-title { display: flex; align-items: center; gap: 8px; }
 
-/* ========== チャットバブル ========== */
+.msg {
+  display: flex; gap: 6px; margin: var(--msg-gap-group) 0;
+}
+.msg.separate { margin-top: var(--msg-gap-separate); }
+.msg.other {
+  flex-direction: row; justify-content: flex-start; padding-left: 24px;
+}
+.msg.mine {
+  flex-direction: row-reverse; justify-content: flex-start; padding-right: 24px; align-items: flex-end;
+}
+.avatar {
+  width: 36px; height: 36px; border-radius: 50%; background: #D8D8D8; color: #fff;
+  font-weight: bold; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+
 .bubble {
-  font-family: var(--font-main);
-  font-size: var(--font-size-base);
-  line-height: var(--line-height);
-  word-break: break-word;
-  padding: var(--bubble-padding-y) var(--bubble-padding-x);
-  border-radius: var(--bubble-radius);
-  min-width: 48px; max-width: 66%;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
-  position: relative; margin-bottom: 2px;
-  background: #fff;
-  border: 1px solid #E5E5EA;
-  color: #222;
+  font-family: "LINE Seed Sans","Helvetica Neue",Arial,sans-serif;
+  font-size: 14px; line-height: 1.4; word-break: break-word; padding: 8px 12px;
+  border-radius: 18px; min-width: 48px; max-width: 66%;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08); position: relative; margin-bottom: 2px;
+  background: #fff; border: 1px solid #E5E5EA; color: #222;
 }
-
-/* 差分だけ指定 */
 .msg.mine .bubble {
-  background: #06C755;
-  color: #fff;
-  border: none;
-  margin-left: auto;
+  background: #06C755; color: #fff; border: none; margin-left: auto;
 }
 .msg.other .bubble {
   margin-right: auto;
 }
-
-/* バブル三角ポインタ */
 .bubble::after {
-  content: "";
-  position: absolute;
-  width: var(--bubble-pointer-size);
-  height: var(--bubble-pointer-size);
-  bottom: var(--bubble-pointer-bottom);
-  background: inherit;
-  border-radius: 0 0 4px 0;
-  transform: rotate(45deg);
+  content: ""; position: absolute; width: 10px; height: 10px; bottom: 6px;
+  background: inherit; border-radius: 0 0 4px 0; transform: rotate(45deg);
 }
 .msg.mine .bubble::after {
-  right: -4px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+  right: -4px; box-shadow: 0 1px 2px rgba(0,0,0,0.08);
 }
 .msg.other .bubble::after {
-  left: -4px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-  border-left: 1px solid #E5E5EA;
-  border-bottom: 1px solid #E5E5EA;
+  left: -4px; box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  border-left: 1px solid #E5E5EA; border-bottom: 1px solid #E5E5EA;
 }
 @media (max-width: 700px) {
   .bubble {
-    font-size: 16px; line-height: 1.6;
-    padding: 11px 16px; border-radius: 20px;
-    max-width: 85%; min-width: 38px;
+    font-size: 16px; line-height: 1.6; padding: 11px 16px;
+    border-radius: 20px; max-width: 85%; min-width: 38px;
   }
-  .bubble::after {
-    width: 12px; height: 12px; bottom: 8px;
-  }
+  .bubble::after { width: 12px; height: 12px; bottom: 8px; }
   .msg.mine .bubble::after { right: -6px; }
   .msg.other .bubble::after { left: -6px; }
 }
 
-/* ========== バブルUI拡張 ========== */
+/* タイムスタンプ・既読 */
 .timestamp {
-  display: block; font-size: var(--font-size-sm); color: var(--color-ts);
-  text-align: right; margin-top: 4px;
+  display: block; font-size: var(--font-size-sm); color: var(--color-ts); text-align: right; margin-top: 4px;
 }
 .read {
-  display: block; font-size: var(--font-size-sm);
-  color: var(--color-text); text-align: right;
-  margin-top: 2px; font-weight: bold;
+  display: block; font-size: var(--font-size-sm); color: var(--color-text); text-align: right; margin-top: 2px; font-weight: bold;
 }
-.bubble span.emoji { font-size: 20px; vertical-align: middle; }
-.bubble-text { display: block; white-space: pre-wrap; }
-.msg-menu-btn {
-  position: absolute; top: 8px; right: 8px;
-  border: none; background: transparent; cursor: pointer;
-  font-size: 18px; line-height: 1;
-}
-.msg-menu {
-  display: none; position: absolute; top: 28px; right: 8px; list-style: none;
-  padding: 4px 0; margin: 0; background: #fff; border: 1px solid #ccc;
-  border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.15); z-index: 100; color: var(--color-text);
-}
-.msg-menu.open { display: block; }
-.msg-menu .menu-item { padding: 6px 12px; cursor: pointer; white-space: nowrap; font-size: 14px; }
-.msg-menu .menu-item:hover { background: #f5f5f5; }
-.bubble-toolbar {
-  position: absolute; top: var(--spacing-xs); right: var(--spacing-xs);
-  display: flex; gap: var(--spacing-xs);
-  opacity: 0; transform: translateY(calc(-2 * var(--spacing-xs)));
-  transition: opacity 0.2s, transform 0.2s; pointer-events: none;
-}
-.bubble:hover .bubble-toolbar {
-  opacity: 1; transform: translateY(0); pointer-events: auto;
-}
-.toolbar-btn {
-  border: none; background: rgba(255,255,255,0.8); border-radius: var(--radius-lg);
-  width: calc(2 * var(--spacing-lg)); height: calc(2 * var(--spacing-lg));
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; font-size: var(--font-size-base); box-shadow: var(--shadow-light);
-}
-.toolbar-btn:hover { background: var(--color-bg); }
 
-/* ========== 入力バー ========== */
+/* 入力バー */
 #input-bar {
-  display: flex; align-items: center; padding: 10px 14px;
-  background: #fff; border-top: 1px solid #eee;
-  position: sticky; bottom: 0; z-index: 2;
+  display: flex; align-items: center; padding: 10px 14px; background: #fff;
+  border-top: 1px solid #eee; position: sticky; bottom: 0; z-index: 2;
 }
 #message-input {
   flex: 1; font-size: 16px; border: 1.5px solid #eee; border-radius: 22px;
@@ -297,8 +208,7 @@ body {
 #send-btn {
   background: #06C755; color: #fff; border: none; border-radius: 22px;
   padding: 0 22px; font-size: 17px; height: 42px; font-weight: bold;
-  cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.07);
-  transition: background .18s;
+  cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.07); transition: background .18s;
 }
 #send-btn:hover { background: #11ea69; }
 @media (max-width: 700px) {
@@ -307,13 +217,12 @@ body {
   .msg.mine .bubble { max-width: 90%; }
 }
 
-/* ========== 既読人数・日付区切り線 ========== */
+/* ======== 日付区切り・既読人数 ======== */
 .date-divider {
   display: flex; align-items: center; text-align: center;
   margin: 12px 0; color: #888; font-size: 12px; user-select: none;
 }
-.date-divider::before,
-.date-divider::after {
+.date-divider::before, .date-divider::after {
   content: ""; flex: 1; border-bottom: 1px solid #ccc;
 }
 .date-divider:not(:empty)::before { margin-right: 10px; }
@@ -328,7 +237,7 @@ body {
   margin-top: 2px; margin-right: 4px; user-select: none;
 }
 
-/* ========== プロフィール・ポップオーバー ========== */
+/* ======== プロフィール・ポップオーバー ======== */
 .profile-container { position: relative; cursor: pointer; }
 .profile-avatar {
   width: var(--profile-avatar-size); height: var(--profile-avatar-size); border-radius: 50%;
@@ -341,18 +250,16 @@ body {
 }
 .profile-popover.active { display: block; }
 
-/* ========== 管理画面・設定画面・売上/発送パネル・モーダル・トースト ========== */
+/* ======== 管理画面・設定画面 ======== */
 .settings-header {
   position: sticky; top: 0; left: 0; z-index: 10; width: 100vw; box-sizing: border-box;
   display: flex; flex-wrap: nowrap; align-items: center; height: 56px; padding: 0 var(--spacing-md);
-  background: #F7F7F7; border-bottom: 1px solid rgba(0,0,0,0.1);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  background: #F7F7F7; border-bottom: 1px solid rgba(0,0,0,0.1); box-shadow: 0 1px 2px rgba(0,0,0,0.05);
 }
 .back-btn {
   display: flex; align-items: center; justify-content: center;
   width: 40px; height: 40px; background: none; border: none; border-radius: 50%;
-  font-size: 20px; color: var(--color-text); cursor: pointer; margin-right: var(--spacing-sm);
-  transition: background .2s;
+  font-size: 20px; color: var(--color-text); cursor: pointer; margin-right: var(--spacing-sm); transition: background .2s;
 }
 .back-btn:hover { background: rgba(0,0,0,0.05); }
 .settings-title {
@@ -386,32 +293,25 @@ body {
 .settings-nav button:hover, .settings-nav button:focus { background: rgba(255,255,255,0.2);}
 .settings-nav button.active { background: rgba(255,255,255,0.3);}
 
-/* 売上登録モーダル（LINE風UI） */
+/* ======== 売上登録モーダル ======== */
 #sales-modal {
   background-color: rgba(0, 0, 0, 0.4);
   font-family: var(--font-main);
 }
 #sales-modal .modal-large {
-  max-width: 90%;
-  max-height: 85vh;
-  background-color: #fff;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
+  max-width: 90%; max-height: 85vh; background-color: #fff; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  overflow: hidden; display: flex; flex-direction: column;
 }
 #sales-modal header {
-  background-color: #06C755; color: #fff; text-align: center; padding: 0.8rem; font-size: 18px; font-weight: bold; border-radius: 16px 16px 0 0;
+  background-color: #06C755; color: #fff; text-align: center; padding: 0.8rem;
+  font-size: 18px; font-weight: bold; border-radius: 16px 16px 0 0;
 }
-#sales-modal main {
-  padding: 0.8rem; overflow-y: auto; flex: 1;
-}
+#sales-modal main { padding: 0.8rem; overflow-y: auto; flex: 1;}
 #sales-modal .screen { display: none; }
 #sales-modal .screen.active { display: block; }
 #sales-modal button {
-  background-color: #fff; color: #06C755; border: 1px solid #06C755;
-  padding: 0.6rem; margin: 0.3rem 0; border-radius: 18px; font-size: 15px; font-weight: bold; cursor: pointer;
+  background-color: #fff; color: #06C755; border: 1px solid #06C755; padding: 0.6rem;
+  margin: 0.3rem 0; border-radius: 18px; font-size: 15px; font-weight: bold; cursor: pointer;
   transition: background-color 0.2s, color 0.2s, opacity 0.2s; width: 100%; box-sizing: border-box;
 }
 #sales-modal button:hover { background-color: #06C755; color: #fff; opacity: 0.9; }
@@ -423,12 +323,10 @@ body {
 #sales-modal #fixed-cart-button button {
   background-color: transparent; color: #fff; border-radius: 0 0 16px 16px; border: none; font-size: 16px; padding: 1rem;
 }
-#sales-modal #fixed-cart-button button:disabled {
-  background-color: #ddd; color: #888;
-}
-#sales-modal #checkout-form input,
-#sales-modal #checkout-form select {
-  padding: 0.6rem; border-radius: 8px; border: 1px solid #ddd; font-size: 14px; box-shadow: inset 0 1px 2px rgba(0,0,0,0.05); width: 100%; box-sizing: border-box; margin-bottom: 0.5rem;
+#sales-modal #fixed-cart-button button:disabled { background-color: #ddd; color: #888;}
+#sales-modal #checkout-form input, #sales-modal #checkout-form select {
+  padding: 0.6rem; border-radius: 8px; border: 1px solid #ddd; font-size: 14px;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.05); width: 100%; box-sizing: border-box; margin-bottom: 0.5rem;
 }
 #sales-modal #checkout-form label {
   color: #555; font-size: 14px; margin-top: 0.5rem;
@@ -448,7 +346,7 @@ body {
 #sales-modal main::-webkit-scrollbar-thumb { background-color: rgba(0,0,0,0.2); border-radius: 4px;}
 #sales-modal .btn-close { display: none !important; }
 
-/* 発送管理パネル */
+/* ======== 発送管理パネル ======== */
 #shipping-panel {
   position: fixed; top: 0; right: 0; width: 100vw; max-width: 420px; height: 100%;
   background: #fff !important; box-shadow: -2px 0 16px rgba(0,0,0,0.12); z-index: 1000;
@@ -457,9 +355,8 @@ body {
 }
 #shipping-panel.open { transform: translateX(0); }
 .shipping-header {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 18px 18px 7px 18px; font-size: 19px; font-weight: bold;
-  border-bottom: 1px solid #e5e5ea; background: #fff;
+  display: flex; justify-content: space-between; align-items: center; padding: 18px 18px 7px 18px;
+  font-size: 19px; font-weight: bold; border-bottom: 1px solid #e5e5ea; background: #fff;
 }
 #close-shipping-btn {
   background: none; border: none; font-size: 28px; color: #888;
@@ -499,7 +396,7 @@ body {
 .shipping-list .actions button.hold { background: #eee; color: #06a5c7;}
 .shipping-list .actions button:active { opacity: .87;}
 
-/* トースト通知 */
+/* ======== トースト通知 ======== */
 #toast-container {
   position: fixed; top: var(--spacing-md); right: var(--spacing-md); z-index: 9999;
   display: flex; flex-direction: column; gap: var(--spacing-1);
@@ -522,7 +419,7 @@ body {
 }
 #load-more-btn:hover { background-color: #e6e6e6; box-shadow: var(--shadow-light); }
 
-/* モーダルウィンドウ */
+/* ======== モーダルウィンドウ ======== */
 .overlay {
   position: fixed; inset: 0; background: rgba(0,0,0,0.4);
   display: flex; align-items: center; justify-content: center; z-index: 100;
@@ -543,7 +440,7 @@ body {
   border: none; padding: 6px 12px; background: var(--line-green); color: #fff; border-radius: 4px; cursor: pointer;
 }
 
-/* 既読メンバーポップアップ */
+/* ======== 既読メンバーポップアップ ======== */
 .modal.small-modal { background: #fff; padding: 16px; border-radius: 10px; width: 280px; box-shadow: 0 2px 6px rgba(0,0,0,0.2); position: relative;}
 .modal.small-modal h3 { margin-top: 0; font-size: 14px; color: #333; border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-bottom: 12px;}
 #read-members-list { list-style: none; padding: 0; margin: 0 0 12px; max-height: 200px; overflow-y: auto; font-size: 13px; color: #555;}
@@ -553,7 +450,7 @@ body {
   display: block; margin-left: auto; padding: 4px 10px; font-size: 12px; cursor: pointer; background: #eee; border: none; border-radius: 6px;
 }
 
-/* ===== スマホ・タブレット用レスポンシブ ===== */
+/* ======== スマホ・タブレット用レスポンシブ ======== */
 @media (max-width: 699px) {
   html, body { height: 100%; overflow: hidden;}
   body { display: flex; flex-direction: column; box-sizing: border-box; padding-bottom: env(safe-area-inset-bottom);}
