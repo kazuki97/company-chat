@@ -1796,3 +1796,59 @@ ul#chat {
   outline: none !important;
   background: #05b64b !important; /* 少し濃いグリーンに変化 */
 }
+
+/* ===== LINE公式チャットバブル完全再現 ===== */
+
+/* 自分のメッセージ（右側） */
+.msg.mine .bubble {
+  background: #06C755;
+  color: #fff;
+  border-radius: 18px;
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 1.4;
+  max-width: 66%;
+  min-width: 48px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+  position: relative;
+  word-break: break-word;
+}
+
+/* 相手のメッセージ（左側） */
+.msg.other .bubble {
+  background: #fff;
+  color: #222;
+  border-radius: 18px;
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 1.4;
+  max-width: 66%;
+  min-width: 48px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+  border: 1px solid #E5E5EA;
+  position: relative;
+  word-break: break-word;
+}
+
+/* 三角ポインタ */
+.msg.mine .bubble::after,
+.msg.other .bubble::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  bottom: 6px;
+  background: inherit;
+  border-radius: 0 0 4px 0;
+  transform: rotate(45deg);
+}
+.msg.mine .bubble::after {
+  right: -4px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+}
+.msg.other .bubble::after {
+  left: -4px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  border-left: 1px solid #E5E5EA;
+  border-bottom: 1px solid #E5E5EA;
+}
