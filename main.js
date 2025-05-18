@@ -4,10 +4,24 @@
  *    ・renderShippingList の body.innerHTML を修正し、
  *      詳細にお客様情報…（中略）
  * =======================================================*/
+// Service Worker登録（これが1行目）
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js')
+      .then(reg => {
+        console.log('✅ Service Worker 登録成功:', reg.scope);
+      })
+      .catch(err => {
+        console.warn('❌ Service Worker 登録失敗:', err);
+      });
+  });
+}
+
 console.log("🚀 main.js v16 loaded");
 
 const db   = firebase.firestore();
 const auth = firebase.auth();
+
 
 // ── 追加: 一度開いたルームを記憶するセット ──
 const openedRooms = new Set();
