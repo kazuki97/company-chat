@@ -20,7 +20,6 @@ if ('serviceWorker' in navigator) {
 // VAPID公開鍵を設定
 const VAPID_PUBLIC_KEY = "BLp8KDJ6igdB4nvN-utZWvXy3QJgGh-kOUFQpePmtgwU2SVuykNcSxEuGyBe3EXgE9duqgJVNicj3p7Qw9E7ha4";
 
-// ↓このDOMContentLoaded（下の方にあるやつ）の中にまとめてください
 document.addEventListener('DOMContentLoaded', () => {
   const btn = document.getElementById('allow-notify');
   if (btn) {
@@ -45,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
           alert("クリック：SW ready"); // 5
           const sub = await reg.pushManager.getSubscription();
           if (!sub) {
+            alert("クリック：購読未登録、新規登録へ進む"); // 追加
             const applicationServerKey = urlBase64ToUint8Array(VAPID_PUBLIC_KEY);
             reg.pushManager.subscribe({
               userVisibleOnly: true,
@@ -60,10 +60,17 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("この端末はすでにPush購読済みです。");
           }
         });
+      } else {
+        alert("Service Worker未対応 or PushManager未対応"); // エラー用
       }
     });
   }
+
+  // --- ここから下は他の初期化（navChats など既存処理） ---
+  // const navChats = document.getElementById('nav-chats');
+  // ...続き...
 });
+
 
 
 
