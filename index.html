@@ -79,29 +79,43 @@
           <div id="fixed-date-header" class="fixed-date-header"></div>
         
           <header class="room-bar">
-            <div class="room-title">
-              ルーム：<span id="room-name">general</span>
-              <button id="toggle-search-btn"
-                      aria-label="メッセージ検索切替">
-                🔍
-              </button>
-            </div>
-            <div class="profile-container">
-              <img src="path/to/avatar.jpg" alt="ユーザーアイコン" class="profile-avatar" />
-              <div class="profile-popover">
-                <div class="popover-header">
-                  <img src="path/to/avatar.jpg" alt="ユーザーアイコン" class="avatar-sm" />
-                  <div class="user-info">
-                    <div class="user-name" id="header-username">山田 太郎</div>
-                    <div class="user-email" id="header-email">taro@example.com</div>
-                  </div>
-                </div>
-                <ul class="popover-menu">
-                  <li><a href="settings.html" class="btn-profile-settings">アカウント設定</a></li>
-                  <li><button class="btn-logout">ログアウト</button></li>
-                </ul>                                  
-              </div>
-            </header>
+  <!-- 左の空白（or 戻るボタンなどもここに配置可、今は省略） -->
+  <div style="width:32px;"></div>
+  
+  <!-- 中央にグループ名のみ -->
+  <div class="room-title">
+    <span id="room-name">wing</span>
+  </div>
+  
+  <!-- 右：検索ボタン（SVGで公式風）＋プロフィールアイコン -->
+  <div style="display:flex;align-items:center;gap:10px;">
+    <button id="toggle-search-btn" class="search-btn" aria-label="メッセージ検索切替">
+      <!-- LINE公式そっくり虫眼鏡SVG -->
+      <svg width="24" height="24" stroke="currentColor" fill="none" stroke-width="2.2"
+        stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="7"/>
+        <line x1="16" y1="16" x2="21" y2="21"/>
+      </svg>
+    </button>
+    <div class="profile-container">
+      <img src="path/to/avatar.jpg" alt="ユーザーアイコン" class="profile-avatar" />
+      <div class="profile-popover">
+        <div class="popover-header">
+          <img src="path/to/avatar.jpg" alt="ユーザーアイコン" class="avatar-sm" />
+          <div class="user-info">
+            <div class="user-name" id="header-username">山田 太郎</div>
+            <div class="user-email" id="header-email">taro@example.com</div>
+          </div>
+        </div>
+        <ul class="popover-menu">
+          <li><a href="settings.html" class="btn-profile-settings">アカウント設定</a></li>
+          <li><button class="btn-logout">ログアウト</button></li>
+        </ul>                                  
+      </div>
+    </div>
+  </div>
+</header>
+
             
         
           <!-- メッセージ検索バー 追加 -->
