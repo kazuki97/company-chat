@@ -149,22 +149,18 @@
 
   <!-- 発送管理サイドドロワー -->
   <aside id="shipping-panel">
-    <div class="panel">
-      <h2>発送管理</h2>
+  <div class="shipping-header">
+    <span>発送管理</span>
+    <button id="close-shipping-btn" aria-label="閉じる">&times;</button>
+  </div>
+  <div class="shipping-tabs">
+    <button id="tab-active" class="tab active">進行中</button>
+    <button id="tab-completed" class="tab">本日完了</button>
+  </div>
+  <ul class="shipping-list" id="active-list"></ul>
+  <ul class="shipping-list hidden" id="completed-list"></ul>
+</aside>
 
-      <!-- タブ切替 -->
-      <div class="shipping-tabs">
-        <button id="tab-active"    class="tab active">進行中</button>
-        <button id="tab-completed" class="tab">本日完了</button>
-      </div>
-
-      <!-- 進行中 / 本日完了 リスト -->
-      <div id="active-list"><!-- JS が here に挿入 --></div>
-      <div id="completed-list" class="hidden"><!-- JS が here に挿入 --></div>
-
-      <button id="close-shipping-btn" class="btn-close">閉じる</button>
-    </div>
-  </aside>
 
   <!-- ルーム作成モーダル -->
   <div id="room-modal" class="overlay hidden">
