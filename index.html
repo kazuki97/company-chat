@@ -76,75 +76,79 @@
 
         <!-- ③ チャットウインドウ -->
         <main class="chat-window">
-          <div id="fixed-date-header" class="fixed-date-header"></div>
-        
-          <header class="room-bar">
-  <!-- 左の空白（or 戻るボタンなどもここに配置可、今は省略） -->
-  <div style="width:32px;"></div>
+  <div id="fixed-date-header" class="fixed-date-header"></div>
   
-  <!-- 中央にグループ名のみ -->
-  <div class="room-title">
-    <span id="room-name">wing</span>
+  <!-- ▼ここを追加！通知購読ボタン -->
+  <div style="padding:8px 12px; text-align:right;">
+    <button id="allow-notify">通知を有効にする</button>
   </div>
+        
+  <header class="room-bar">
+    <!-- 左の空白（or 戻るボタンなどもここに配置可、今は省略） -->
+    <div style="width:32px;"></div>
   
-  <!-- 右：検索ボタン（SVGで公式風）＋プロフィールアイコン -->
-  <div style="display:flex;align-items:center;gap:10px;">
-    <button id="toggle-search-btn" class="search-btn" aria-label="メッセージ検索切替">
-      <!-- LINE公式そっくり虫眼鏡SVG -->
-      <svg width="24" height="24" stroke="currentColor" fill="none" stroke-width="2.2"
-        stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-        <circle cx="11" cy="11" r="7"/>
-        <line x1="16" y1="16" x2="21" y2="21"/>
-      </svg>
-    </button>
-    <div class="profile-container">
-      <img src="path/to/avatar.jpg" alt="ユーザーアイコン" class="profile-avatar" />
-      <div class="profile-popover">
-        <div class="popover-header">
-          <img src="path/to/avatar.jpg" alt="ユーザーアイコン" class="avatar-sm" />
-          <div class="user-info">
-            <div class="user-name" id="header-username">山田 太郎</div>
-            <div class="user-email" id="header-email">taro@example.com</div>
+    <!-- 中央にグループ名のみ -->
+    <div class="room-title">
+      <span id="room-name">wing</span>
+    </div>
+  
+    <!-- 右：検索ボタン（SVGで公式風）＋プロフィールアイコン -->
+    <div style="display:flex;align-items:center;gap:10px;">
+      <button id="toggle-search-btn" class="search-btn" aria-label="メッセージ検索切替">
+        <!-- LINE公式そっくり虫眼鏡SVG -->
+        <svg width="24" height="24" stroke="currentColor" fill="none" stroke-width="2.2"
+          stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="7"/>
+          <line x1="16" y1="16" x2="21" y2="21"/>
+        </svg>
+      </button>
+      <div class="profile-container">
+        <img src="path/to/avatar.jpg" alt="ユーザーアイコン" class="profile-avatar" />
+        <div class="profile-popover">
+          <div class="popover-header">
+            <img src="path/to/avatar.jpg" alt="ユーザーアイコン" class="avatar-sm" />
+            <div class="user-info">
+              <div class="user-name" id="header-username">山田 太郎</div>
+              <div class="user-email" id="header-email">taro@example.com</div>
+            </div>
           </div>
+          <ul class="popover-menu">
+            <li><a href="settings.html" class="btn-profile-settings">アカウント設定</a></li>
+            <li><button class="btn-logout">ログアウト</button></li>
+          </ul>                                  
         </div>
-        <ul class="popover-menu">
-          <li><a href="settings.html" class="btn-profile-settings">アカウント設定</a></li>
-          <li><button class="btn-logout">ログアウト</button></li>
-        </ul>                                  
       </div>
     </div>
+  </header>
+          
+  <!-- メッセージ検索バー 追加 -->
+  <div class="message-search-bar">
+    <input type="search"
+           id="message-search"
+           placeholder="メッセージを検索…"
+           autocomplete="off" />
   </div>
-</header>
 
-            
+  <!-- 返信プレビュー -->
+  <div class="reply-preview hidden">
+    <span class="original"></span>
+    <button class="cancel-btn" aria-label="キャンセル">×</button>
+  </div>
         
-          <!-- メッセージ検索バー 追加 -->
-          <div class="message-search-bar">
-            <input type="search"
-                   id="message-search"
-                   placeholder="メッセージを検索…"
-                   autocomplete="off" />
-          </div>
-    
-          <!-- 返信プレビュー -->
-          <div class="reply-preview hidden">
-            <span class="original"></span>
-            <button class="cancel-btn" aria-label="キャンセル">×</button>
-          </div>
-        
-          <ul id="chat"></ul>
+  <ul id="chat"></ul>
 
-<!-- 「さらに読み込む」ボタンを追加 -->
-<div id="load-more-container">
-  <button id="load-more-btn">さらに読み込む</button>
-</div>
+  <!-- 「さらに読み込む」ボタンを追加 -->
+  <div id="load-more-container">
+    <button id="load-more-btn">さらに読み込む</button>
+  </div>
 
-          <div id="input-bar">
-            <input type="text" id="message-input"
-                   placeholder="メッセージを入力…" autocomplete="off" />
-            <button id="send-btn">送信</button>
-          </div>
-        </main>    
+  <div id="input-bar">
+    <input type="text" id="message-input"
+           placeholder="メッセージを入力…" autocomplete="off" />
+    <button id="send-btn">送信</button>
+  </div>
+</main>
+ 
   </div>
 
   <!-- 発送管理サイドドロワー -->
