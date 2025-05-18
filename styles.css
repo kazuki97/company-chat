@@ -592,10 +592,7 @@ ul#chat {
     padding: 0;
 }
 .bubble:hover .msg-menu-btn { opacity: 1; }
-/* スマホでは⋮非表示 */
-@media (max-width: 700px) {
-    .msg-menu-btn { display: none !important; }
-}
+
 /* メニューそのまま */
 .msg-menu {
     display: none;
