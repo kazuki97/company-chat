@@ -22,19 +22,42 @@ const VAPID_PUBLIC_KEY = "BLp8KDJ6igdB4nvN-utZWvXy3QJgGh-kOUFQpePmtgwU2SVuykNcSx
 
 // ↓このDOMContentLoaded（下の方にあるやつ）の中にまとめてください
 document.addEventListener('DOMContentLoaded', () => {
-  // ▼ 通知を有効にするボタンのイベント登録（テスト用にalertだけ） ▼
   const btn = document.getElementById('allow-notify');
   if (btn) {
-    btn.addEventListener('click', function() {
-      alert("クリックされました！");
+    btn.addEventListener('click', async function() {
+      // 通知許可
+      if ("Notification" in window && Notification.permission !== "granted") {
+        const permission = await Notification.requestPermission();
+        if (permission !== "granted") {
+          alert("通知を許可しないとPush通知は受け取れません。");
+          return;
+        }
+      }
+      // Push購読
+      if ('serviceWorker' in navigator && 'PushManager' in window) {
+        navigator.serviceWorker.ready.then(async reg => {
+          const sub = await reg.pushManager.getSubscription();
+          if (!sub) {
+            const applicationServerKey = urlBase64ToUint8Array(VAPID_PUBLIC_KEY);
+            reg.pushManager.subscribe({
+              userVisibleOnly: true,
+              applicationServerKey
+            }).then(subscription => {
+              console.log("Push購読情報:", JSON.stringify(subscription));
+              alert("購読情報が発行されました。");
+            });
+          } else {
+            console.log("既に購読済み:", JSON.stringify(sub));
+            alert("この端末はすでにPush購読済みです。");
+          }
+        });
+      }
     });
   }
 
-  // --- ここから下は他の初期化（navChats など既存処理） ---
-  // 例
-  // const navChats = document.getElementById('nav-chats');
-  // ...続き...
+  // --- この下は他の初期化（navChatsなど） ---
 });
+
 
 
 // Base64文字列→Uint8Array変換用
