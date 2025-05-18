@@ -14,18 +14,50 @@
   <div class="app">
     <!-- ① ナビゲーション -->
     <aside class="nav">
-      <!-- メインナビゲーション -->
-      <button class="nav-icon" aria-label="ホーム">🏠</button>
-      <button class="nav-icon" aria-label="友だち">👥</button>
-      <button class="nav-icon" aria-label="トーク">💬</button>
-      <button class="nav-icon" aria-label="タイムライン">⏰</button>
-      <button class="nav-icon" aria-label="Keep">🔖</button>
-      
-    
-      <!-- その他メニュー -->
-      <div class="nav-divider"></div>
-      <button class="nav-icon" aria-label="その他">⋯</button>
-    </aside>
+  <!-- メインナビゲーション：SVGアイコン化 -->
+  <button class="nav-icon" aria-label="トーク">
+    <span class="icon">
+      <!-- 吹き出しSVG：トーク -->
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+        fill="none" stroke="currentColor" stroke-width="2.2"
+        stroke-linecap="round" stroke-linejoin="round"
+        viewBox="0 0 24 24">
+        <path d="M21 12c0 3.9-3.6 7-8 7-1.1 0-2.1-.2-3.1-.5L3 20l1.5-3.4C3.5 15.1 3 13.6 3 12c0-3.9 3.6-7 8-7s8 3.1 8 7z"/>
+      </svg>
+    </span>
+  </button>
+  <button class="nav-icon" aria-label="ルーム一覧">
+    <span class="icon">
+      <!-- リストSVG：ルーム一覧 -->
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+        fill="none" stroke="currentColor" stroke-width="2.2"
+        stroke-linecap="round" stroke-linejoin="round"
+        viewBox="0 0 24 24">
+        <rect x="4" y="4" width="16" height="16" rx="4"/>
+        <line x1="8" y1="8" x2="16" y2="8"/>
+        <line x1="8" y1="12" x2="16" y2="12"/>
+        <line x1="8" y1="16" x2="12" y2="16"/>
+      </svg>
+    </span>
+  </button>
+  <button class="nav-icon" aria-label="発送管理">
+    <span class="icon">
+      <!-- トラックSVG：発送管理 -->
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+        fill="none" stroke="currentColor" stroke-width="2.2"
+        stroke-linecap="round" stroke-linejoin="round"
+        viewBox="0 0 24 24">
+        <rect x="1" y="7" width="15" height="10" rx="2"/>
+        <path d="M16 12h3l3 3v2a2 2 0 0 1-2 2h-2"/>
+        <circle cx="5.5" cy="18" r="1.5"/>
+        <circle cx="18.5" cy="18" r="1.5"/>
+      </svg>
+    </span>
+  </button>
+  <!-- 必要ならnav-divider・その他メニューはそのまま -->
+  <div class="nav-divider"></div>
+</aside>
+
     
 
     <!-- ② ルーム一覧 -->
@@ -180,19 +212,49 @@
 <!-- ▼▼▼ ここに追加します ▼▼▼ -->
 <div class="bottom-nav">
   <button id="nav-chats" class="active">
-    <span class="icon">💬</span>
+    <span class="icon">
+      <!-- 吹き出しSVG：トーク -->
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+        fill="none" stroke="currentColor" stroke-width="2.2"
+        stroke-linecap="round" stroke-linejoin="round"
+        viewBox="0 0 24 24">
+        <path d="M21 12c0 3.9-3.6 7-8 7-1.1 0-2.1-.2-3.1-.5L3 20l1.5-3.4C3.5 15.1 3 13.6 3 12c0-3.9 3.6-7 8-7s8 3.1 8 7z"/>
+      </svg>
+    </span>
     <span>トーク</span>
   </button>
   <button id="nav-rooms">
-    <span class="icon">📃</span>
+    <span class="icon">
+      <!-- リストSVG：ルーム一覧 -->
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+        fill="none" stroke="currentColor" stroke-width="2.2"
+        stroke-linecap="round" stroke-linejoin="round"
+        viewBox="0 0 24 24">
+        <rect x="4" y="4" width="16" height="16" rx="4"/>
+        <line x1="8" y1="8" x2="16" y2="8"/>
+        <line x1="8" y1="12" x2="16" y2="12"/>
+        <line x1="8" y1="16" x2="12" y2="16"/>
+      </svg>
+    </span>
     <span>ルーム一覧</span>
   </button>
   <button id="nav-shipping">
-    <span class="icon">🚚</span>
+    <span class="icon">
+      <!-- トラックSVG：発送管理 -->
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+        fill="none" stroke="currentColor" stroke-width="2.2"
+        stroke-linecap="round" stroke-linejoin="round"
+        viewBox="0 0 24 24">
+        <rect x="1" y="7" width="15" height="10" rx="2"/>
+        <path d="M16 12h3l3 3v2a2 2 0 0 1-2 2h-2"/>
+        <circle cx="5.5" cy="18" r="1.5"/>
+        <circle cx="18.5" cy="18" r="1.5"/>
+      </svg>
+    </span>
     <span>発送管理</span>
   </button>
-  
 </div>
+
 
 
         
