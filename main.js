@@ -20,8 +20,9 @@ if ('serviceWorker' in navigator) {
 // VAPID公開鍵を設定
 const VAPID_PUBLIC_KEY = "BLp8KDJ6igdB4nvN-utZWvXy3QJgGh-kOUFQpePmtgwU2SVuykNcSxEuGyBe3EXgE9duqgJVNicj3p7Qw9E7ha4";
 
-// 「通知を有効にする」ボタン押下時だけ通知許可＋Push購読
-document.addEventListener("DOMContentLoaded", function() {
+// ↓このDOMContentLoaded（下の方にあるやつ）の中にまとめてください
+document.addEventListener('DOMContentLoaded', () => {
+  // ▼ 通知を有効にするボタンのイベント登録 ▼
   const btn = document.getElementById('allow-notify');
   if (btn) {
     btn.addEventListener('click', async function() {
@@ -54,7 +55,13 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     });
   }
+
+  // --- ここから下は他の初期化（navChats など既存処理） ---
+  // 例
+  // const navChats = document.getElementById('nav-chats');
+  // ...続き...
 });
+
 
 // Base64文字列→Uint8Array変換用
 function urlBase64ToUint8Array(base64String) {
