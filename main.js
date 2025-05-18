@@ -20,23 +20,41 @@ if ('serviceWorker' in navigator) {
 // VAPID公開鍵を設定
 const VAPID_PUBLIC_KEY = "BLp8KDJ6igdB4nvN-utZWvXy3QJgGh-kOUFQpePmtgwU2SVuykNcSxEuGyBe3EXgE9duqgJVNicj3p7Qw9E7ha4";
 
-// Service Worker登録後、Push購読（subscribe）
-if ('serviceWorker' in navigator && 'PushManager' in window) {
-  navigator.serviceWorker.ready.then(async reg => {
-    const sub = await reg.pushManager.getSubscription();
-    if (!sub) {
-      const applicationServerKey = urlBase64ToUint8Array(VAPID_PUBLIC_KEY);
-      reg.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey
-      }).then(subscription => {
-        // 通知購読情報（JSON）をとりあえずコンソールに出す
-        console.log("Push購読情報:", JSON.stringify(subscription));
-        alert("通知購読が完了しました。管理画面に購読情報を貼り付けてください。");
-      });
-    }
-  });
-}
+// 「通知を有効にする」ボタン押下時だけ通知許可＋Push購読
+document.addEventListener("DOMContentLoaded", function() {
+  const btn = document.getElementById('allow-notify');
+  if (btn) {
+    btn.addEventListener('click', async function() {
+      // 通知許可
+      if ("Notification" in window && Notification.permission !== "granted") {
+        const permission = await Notification.requestPermission();
+        if (permission !== "granted") {
+          alert("通知を許可しないとPush通知は受け取れません。");
+          return;
+        }
+      }
+      // Push購読
+      if ('serviceWorker' in navigator && 'PushManager' in window) {
+        navigator.serviceWorker.ready.then(async reg => {
+          const sub = await reg.pushManager.getSubscription();
+          if (!sub) {
+            const applicationServerKey = urlBase64ToUint8Array(VAPID_PUBLIC_KEY);
+            reg.pushManager.subscribe({
+              userVisibleOnly: true,
+              applicationServerKey
+            }).then(subscription => {
+              console.log("Push購読情報:", JSON.stringify(subscription));
+              alert("購読情報が発行されました。");
+            });
+          } else {
+            console.log("既に購読済み:", JSON.stringify(sub));
+            alert("この端末はすでにPush購読済みです。");
+          }
+        });
+      }
+    });
+  }
+});
 
 // Base64文字列→Uint8Array変換用
 function urlBase64ToUint8Array(base64String) {
@@ -49,7 +67,6 @@ function urlBase64ToUint8Array(base64String) {
 
 console.log("🚀 main.js v16 loaded");
 
-// （以降は既存のmain.jsのまま…）
 
 
 const db   = firebase.firestore();
